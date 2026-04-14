@@ -3,8 +3,10 @@ import { motion } from "framer-motion";
 
 function App() {
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-black">
-
+    <div
+      className="relative w-full h-screen overflow-hidden bg-black"
+      style={{ perspective: 1000 }}  // ✅ FIX: 3D rotation support
+    >
       {/* Animated Background */}
       <div
         className="absolute inset-0 bg-cover bg-center animate-bg"
@@ -19,9 +21,8 @@ function App() {
 
       <Navbar />
 
-      {/* Hero */}
+      {/* Hero Section */}
       <div className="relative z-10 h-screen flex justify-center items-center px-6">
-
         <motion.div
           initial={{ opacity: 0, scale: 0.7, rotateX: 30 }}
           animate={{ opacity: 1, scale: 1, rotateX: 0 }}
@@ -34,11 +35,11 @@ function App() {
           className="max-w-3xl text-center p-10 rounded-3xl
           bg-white/10 backdrop-blur-xl border border-white/20
           shadow-2xl"
+          style={{ transformStyle: "preserve-3d" }} // ✅ FIX: smooth 3D effect
         >
-
           <motion.h1
-            initial={{ y: 40 }}
-            animate={{ y: 0 }}
+            initial={{ y: 40, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5 }}
             className="text-white text-5xl md:text-7xl font-bold mb-6"
           >
@@ -47,21 +48,22 @@ function App() {
 
           <p className="text-gray-200 text-lg mb-8 leading-8">
             Premium futuristic landing page with 3D hover effects,
-            animated water background and glassmorphism UI.
+            animated background and glassmorphism UI.
           </p>
 
           <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            whileHover={{
+              scale: 1.1,
+              boxShadow: "0px 0px 25px rgba(34, 211, 238, 0.6)",
+            }}
+            whileTap={{ scale: 0.95 }}
             className="px-8 py-4 rounded-full bg-cyan-500 text-white
             font-semibold shadow-lg hover:bg-cyan-600 duration-300"
           >
             Explore Now
           </motion.button>
-
         </motion.div>
       </div>
-
     </div>
   );
 }
